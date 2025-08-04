@@ -19,44 +19,12 @@ class RDatePicker extends LitElement {
             width: 100%;
             position: relative;
         }
-
-        .datepicker-wrapper wa-input {
-            flex: 1;
-            padding-right: 2.5rem !important;
-        }
-
-        .shortcuts-hint {
-            position: absolute;
-            bottom: -18px;
-            left: 0;
-            font-size: 0.75rem;
-            color: var(--wa-color-neutral-80);
-            opacity: 0;
-            transition: opacity 0.2s ease;
-            pointer-events: none;
-            white-space: nowrap;
-            z-index: 1;
-        }
-
-        .shortcuts-hint.show {
-            opacity: 1;
-        }
     `;
 
     constructor() {
         super();
         this.id = '';
         this.value = '';
-        this.name = '';
-        this.placeholder = `yyyy${this.delimiter}mm${this.delimiter}dd`;
-        this.required = false;
-        this.disabled = false;
-        this.size = 'small';
-        this.shortcuts = true;
-        this.label = '';
-        this.textValue = '';
-        this.focused = false;
-        this.showHint = false;
     }
 
     connectedCallback() {

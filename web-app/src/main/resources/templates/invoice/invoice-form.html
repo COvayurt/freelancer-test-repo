@@ -30,7 +30,8 @@
                             name='issueDate',
                             label=#{invoice.form.issue_date},
                             required='true',
-                            size='small')}">
+                            size='small',
+                            showHint=true)}">
                     </th:block>
                     <wa-input id="daysUntilDue" value="14" min="0" size="small" required
                               type="number" th:label="#{invoice.form.due_days}"></wa-input>
