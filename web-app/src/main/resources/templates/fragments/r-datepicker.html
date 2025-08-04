@@ -149,12 +149,12 @@
         <r-datepicker
             th:name="${name}"
             th:value="${value}"
-            style="display: none;"
+            style="display: flex;"
             data-datepicker-logic>
         </r-datepicker>
         
         <div class="r-shortcuts-hint" data-datepicker-hint th:if="${showHint ?: true}">
-            Shortcuts: ddmm + Enter, ddmmyy + Enter, 't' for today
+            ddmm + Enter, ddmmyy + Enter, 't' for today
         </div>
     </div>
 </th:block>

@@ -5,6 +5,10 @@ class RDatePicker extends LitElement {
     static properties = {
         value: {type: String},
         name: {type: String},
+        size: {type: String},
+        required: {type: Boolean},
+        showHint: {type: Boolean, attribute: 'show-hint'},
+        standalone: {type: Boolean},
     };
 
     delimiter = "-";
@@ -19,12 +23,24 @@ class RDatePicker extends LitElement {
             width: 100%;
             position: relative;
         }
-    `;
+
+        .r-shortcuts-hint {
+            position: absolute;
+            font-size: 0.50rem;
+            color: var(--wa-color-neutral-50);
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }`;
 
     constructor() {
         super();
         this.id = '';
         this.value = '';
+        this.size = 'small';
+        this.required = false;
+        this.showHint = false;
+        this.standalone = false;
     }
 
     connectedCallback() {
@@ -60,26 +76,10 @@ class RDatePicker extends LitElement {
         }
     }
 
-    _handleIconClick() {
-        if (this.disabled) return;
-
+    _handleIconClick(e) {
         const nativeInput = this.shadowRoot.querySelector('input[type="date"]');
-
         if (nativeInput && nativeInput.showPicker) {
-            nativeInput.style.opacity = '1';
-            nativeInput.style.pointerEvents = 'auto';
-
-            nativeInput.focus({ preventScroll: true });
             nativeInput.showPicker();
-            setTimeout(() => {
-
-
-                setTimeout(() => {
-                    nativeInput.style.opacity = '0';
-                    nativeInput.style.pointerEvents = 'none';
-                    nativeInput.style.zIndex = '-1';
-                }, 300);
-            }, 0);
         }
     }
 
@@ -163,24 +163,86 @@ class RDatePicker extends LitElement {
     }
 
     focus() {
-        debugger;
         const input = this.shadowRoot.querySelector('.datepicker-input');
         input?.focus();
     }
 
+    _handleStandaloneKeyDown(e) {
+        const input = e.target;
+        this.textValue = input.value;
+        this._handleKeyDown(e);
+    }
+
+    _handleStandaloneInput(e) {
+        const input = e.target;
+        this.textValue = input.value;
+    }
+
+    _handleStandaloneFocus() {
+        if (this.showHint) {
+            const hint = this.shadowRoot.querySelector('.r-shortcuts-hint');
+            if (hint) {
+                hint.style.opacity = '1';
+            }
+        }
+    }
+
+    _handleStandaloneBlur() {
+        if (this.showHint) {
+            const hint = this.shadowRoot.querySelector('.r-shortcuts-hint');
+            if (hint) {
+                hint.style.opacity = '0';
+            }
+        }
+    }
 
 
     render() {
-        return html`
-            <input 
-                id="${this.name}"
-                type="date"
-                style="position: absolute; opacity: 0; pointer-events: none; z-index: -1;"
-                .value="${this.value}"
-                @change="${this._handleNativeDateChange}"
-                tabindex="-1"
-            />
-        `;
+        if (this.standalone) {
+            return html`
+                <wa-input
+                        name="${this.name}"
+                        type="text"
+                        size="${this.size}"
+                        ?required="${this.required}"
+                        .value="${this.value}"
+                        autocomplete="off"
+                        class="datepicker-input"
+                        @keydown="${this._handleStandaloneKeyDown}"
+                        @input="${this._handleStandaloneInput}"
+                        @focus="${this._handleStandaloneFocus}"
+                        @blur="${this._handleStandaloneBlur}">
+                    <wa-icon slot="end" name="calendar"
+                             @click="${this._handleIconClick}"></wa-icon>
+                </wa-input>
+
+                <input
+                        id="${this.name}"
+                        type="date"
+                        style="position: absolute; opacity: 0; pointer-events: none; z-index: -1;"
+                        .value="${this.value}"
+                        @change="${this._handleNativeDateChange}"
+                        tabindex="-1"
+                />
+
+                ${this.showHint ? html`
+                    <div class="r-shortcuts-hint">
+                        ddmm + Enter, ddmmyy + Enter, 't' for today
+                    </div>
+                ` : ''}
+            `;
+        } else {
+            return html`
+                <input
+                        id="${this.name}"
+                        type="date"
+                        style="position: absolute; opacity: 0; pointer-events: none; z-index: -1;"
+                        .value="${this.value}"
+                        @change="${this._handleNativeDateChange}"
+                        tabindex="-1"
+                />
+            `;
+        }
     }
 }
 

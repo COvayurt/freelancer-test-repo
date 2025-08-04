@@ -168,12 +168,14 @@ async function addPostingLine(sourceRow = null) {
     
     newRow.innerHTML = `
         <input type="hidden" name="postingLines[${rowCounter}].rowNumber" value="${rowCounter}">
-        <td>
-            <wa-input type="date" style="width: 9rem;" size="small" 
-                      tabindex="${rowCounter * 10 + 1}" 
-                      value="${defaultValues.postingDate}"
-                      name="postingLines[${rowCounter}].postingDate">
-            </wa-input>
+        <td style="width: 9rem;">
+            <r-datepicker name="postingLines[${rowCounter}].postingDate"
+                          value="${defaultValues.postingDate}"
+                          tabindex="${rowCounter * 10 + 1}"
+                          size="small" 
+                          required 
+                          standalone>
+            </r-datepicker>
         </td>
         <td>
             <div style="display: flex; flex-direction: column; gap: 2px;">
@@ -329,7 +331,7 @@ function renumberPostingRows() {
             hiddenRowNumber.value = index;
         }
 
-        const formFields = row.querySelectorAll('input, select, r-combobox, wa-input, wa-select');
+        const formFields = row.querySelectorAll('input, select, r-combobox, r-datepicker, wa-input, wa-select');
         formFields.forEach(field => {
             if (field.name) {
                 field.name = field.name.replace(/postingLines\[\d+\]/, `postingLines[${index}]`);

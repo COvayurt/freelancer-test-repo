@@ -19,43 +19,33 @@ document.addEventListener('DOMContentLoaded', () => {
             input.dataset.initialized = 'true';
 
             if (logic.tagName === 'R-DATEPICKER') {
-                const checkReady = () => {
-                    if (typeof logic._handleKeyDown === 'function') {
-                        setupEventListeners();
-                    } else {
-                        setTimeout(checkReady, 50);
-                    }
-                };
 
-                const setupEventListeners = () => {
-                    input.addEventListener('keydown', (e) => {
-                        logic.textValue = input.value;
-                        try {
-                            logic._handleKeyDown(e);
-                        } catch (error) {
-                            console.error('Error calling _handleKeyDown:', error);
-                        }
+                input.addEventListener('keydown', (e) => {
+                    logic.textValue = input.value;
+                    try {
+                        logic._handleKeyDown(e);
+                    } catch (error) {
+                        console.error('Error calling _handleKeyDown:', error);
+                    }
+                });
+
+                logic.addEventListener('input', (e) => {
+                    input.value = e.detail && e.detail.value;
+                    input.dispatchEvent(new Event('change', {bubbles: true}));
+                    input.dispatchEvent(new Event('input', {bubbles: true}));
+                });
+
+                if (hint) {
+                    input.addEventListener('focus', () => hint.style.opacity = '1');
+                    input.addEventListener('blur', () => hint.style.opacity = '0');
+                }
+
+                if (icon) {
+                    icon.addEventListener('click', (e) => {
+                        logic._handleIconClick(e);
                     });
+                }
 
-                    logic.addEventListener('input', (e) => {
-                        input.value = e.detail && e.detail.value;
-                        input.dispatchEvent(new Event('change', {bubbles: true}));
-                        input.dispatchEvent(new Event('input', {bubbles: true}));
-                    });
-
-                    if (hint) {
-                        input.addEventListener('focus', () => hint.style.opacity = '1');
-                        input.addEventListener('blur', () => hint.style.opacity = '0');
-                    }
-
-                    if (icon) {
-                        icon.addEventListener('click', () => {
-                            logic._handleIconClick();
-                        });
-                    }
-                };
-
-                checkReady();
             }
         });
     }
