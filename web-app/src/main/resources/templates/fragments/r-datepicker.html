@@ -38,6 +38,27 @@
 </th:block>
 
 <!-- Basic signature for simple usage -->
+<th:block th:fragment="r-datepicker_no_id(name, value, required, size, tabIndex, showHint)">
+    <th:block th:replace="~{fragments/r-datepicker :: r-datepicker-master(
+        id=${name},
+        name=${name},
+        value=${value},
+        required=${required ?: false},
+        size=${size},
+        tabIndex=${tabIndex},
+        label=null,
+        hxGet=null,
+        hxTarget=null,
+        hxTrigger=null,
+        hxInclude=null,
+        hxIndicator=null,
+        hxTargetError=null,
+        hxSwap=null,
+        showHint=${showHint})}">
+    </th:block>
+</th:block>
+
+<!-- Basic signature for simple usage -->
 <th:block th:fragment="r-datepicker(id, name, value, required, size, tabIndex, showHint)">
     <th:block th:replace="~{fragments/r-datepicker :: r-datepicker-master(
         id=${id},
