@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en" layout:decorate="~{layout/base}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
-
+<head>
+    <th:block th:replace="~{fragments/r-datepicker :: r-datepicker-dependencies}"></th:block>
+</head>
 <body>
 <main layout:fragment="content">
     <div class="wa-container">
@@ -11,30 +13,33 @@
                 <div class="wa-cluster">
                     <div class="wa-stack wa-gap-xs">
                         <label class="wa-body-s" style="font-weight: var(--wa-font-weight-semibold);">Start Date</label>
-                        <wa-input type="date"
-                                  name="startDate"
-                                  size="small"
-                                  th:value="${startDate}"
-                                  th:hx-get="'/htmx/voucher/overview'"
-                                  th:hx-target="'#tableContent'"
-                                  th:hx-target-error="'#r-callout'"
-                                  th:hx-indicator="'#loading-indicator'"
-                                  th:hx-trigger="'change'"
-                                  th:hx-include="'[name=\'endDate\']'"></wa-input>
+                        <th:block th:replace="~{fragments/r-datepicker :: r-datepicker-htmx-extended(
+                            name='startDate',
+                            value=${startDate},
+                            size='small',
+                            hxGet='/htmx/voucher/overview',
+                            hxTarget='#tableContent',
+                            hxTrigger='change',
+                            hxInclude='[name=endDate]',
+                            hxIndicator='#loading-indicator',
+                            hxTargetError='#r-callout')}">
+                        </th:block>
                     </div>
 
                     <div class="wa-stack wa-gap-xs">
                         <label class="wa-body-s" style="font-weight: var(--wa-font-weight-semibold);">End Date</label>
-                        <wa-input type="date"
-                                  name="endDate"
-                                  size="small"
-                                  th:value="${endDate}"
-                                  th:hx-get="'/htmx/voucher/overview'"
-                                  th:hx-target="'#tableContent'"
-                                  th:hx-target-error="'#r-callout'"
-                                  th:hx-indicator="'#loading-indicator'"
-                                  th:hx-trigger="'change'"
-                                  th:hx-include="'[name=\'startDate\']'"></wa-input>
+
+                        <th:block th:replace="~{fragments/r-datepicker :: r-datepicker-htmx-extended(
+                            name='endDate',
+                            value=${endDate},
+                            size='small',
+                            hxGet='/htmx/voucher/overview',
+                            hxTarget='#tableContent',
+                            hxTrigger='change',
+                            hxInclude='[name=startDate]',
+                            hxIndicator='#loading-indicator',
+                            hxTargetError='#r-callout')}">
+                        </th:block>
                     </div>
                 </div>
             </wa-card>
@@ -45,7 +50,8 @@
                     <div class="wa-stack wa-gap-m">
                         <div th:if="${#lists.isEmpty(vouchers)}" class="wa-align-items-center">
                             <div class="wa-stack wa-gap-m wa-align-items-center">
-                                <wa-icon name="chart-line" style="font-size: var(--wa-font-size-4xl); opacity: 0.5;"></wa-icon>
+                                <wa-icon name="chart-line"
+                                         style="font-size: var(--wa-font-size-4xl); opacity: 0.5;"></wa-icon>
                                 <h3 class="wa-heading-m" th:text="#{no_vouchers_found}"/>
                             </div>
                         </div>

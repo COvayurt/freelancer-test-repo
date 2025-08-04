@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="r-datepicker-dependencies">
+    <script type="importmap">
+        {
+            "imports": {
+                "lit": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+                "lit/": "https://cdn.jsdelivr.net/gh/lit/dist@3/"
+            }
+        }
+    </script>
+
+    <script type="module" th:src="@{/assets/components/r-datepicker.js}"></script>
+    <script th:src="@{/assets/components/r-datepicker-coordinator.js}"></script>
+    <link rel="stylesheet" th:href="@{/assets/components/r-datepicker.css}">
+</th:block>
+
+<!-- Basic with th:label signature for simple usage -->
+<th:block th:fragment="r-datepicker_label(id, name, label, required, size)">
+    <div class="r-datepicker-hybrid" data-datepicker-wrapper>
+        <wa-input
+                th:id="${id}"
+                th:name="${name}"
+                th:required="${required ?: false}"
+                type="text"
+                th:value="${value}"
+                th:size="${size}"
+                th:label="${label}"
+                autocomplete="off"
+                spellcheck="false"
+                class="r-datepicker-input"
+                data-datepicker-input>
+            <wa-icon slot="end" name="calendar" class="r-datepicker-icon" style="cursor: pointer;" data-datepicker-icon></wa-icon>
+        </wa-input>
+
+        <r-datepicker
+                th:name="${name}"
+                th:value="${value}"
+                style="display: none;"
+                class="r-datepicker-logic"
+                data-datepicker-logic>
+        </r-datepicker>
+
+        <div class="r-shortcuts-hint" style="position: absolute; bottom: -18px; left: 0; font-size: 0.75rem; color: var(--wa-color-neutral-80); opacity: 0; transition: opacity 0.2s ease; pointer-events: none; white-space: nowrap; z-index: 1;" data-datepicker-hint>
+            Shortcuts: ddmm + Enter, ddmmyy + Enter, 't' for today
+        </div>
+    </div>
+</th:block>
+
+<!-- Basic signature for simple usage -->
+<th:block th:fragment="r-datepicker(id, name, value, required, size, tabIndex)">
+    <div class="r-datepicker-hybrid" data-datepicker-wrapper>
+        <wa-input
+            th:id="${id}"
+            th:name="${name}"
+            th:required="${required ?: false}"
+            type="text"
+            th:value="${value}"
+            th:size="${size}"
+            autocomplete="off"
+            class="r-datepicker-input"
+            tabIndex="${tabIndex}"
+            data-datepicker-input>
+            <wa-icon slot="end" name="calendar" class="r-datepicker-icon" style="cursor: pointer;" data-datepicker-icon></wa-icon>
+        </wa-input>
+        
+        <r-datepicker
+            th:name="${name}"
+            th:value="${value}"
+            style="display: none;"
+            class="r-datepicker-logic"
+            data-datepicker-logic>
+        </r-datepicker>
+        
+        <div class="r-shortcuts-hint" style="position: absolute; bottom: -18px; left: 0; font-size: 0.75rem; color: var(--wa-color-neutral-80); opacity: 0; transition: opacity 0.2s ease; pointer-events: none; white-space: nowrap; z-index: 1;" data-datepicker-hint>
+            Shortcuts: ddmm + Enter, ddmmyy + Enter, 't' for today
+        </div>
+    </div>
+</th:block>
+
+
+<!-- Extended HTMX signature with more options -->
+<th:block th:fragment="r-datepicker-htmx-extended(name, value, size, hxGet, hxTarget, hxTrigger, hxInclude, hxIndicator, hxTargetError)">
+    <div class="r-datepicker-hybrid" data-datepicker-wrapper>
+        <wa-input
+            th:id="${name}"
+            th:name="${name}"
+            type="text"
+            th:value="${value}"
+            th:size="${size ?: 'small'}"
+            th:hx-get="${hxGet}"
+            th:hx-target="${hxTarget}"
+            th:hx-trigger="${hxTrigger}"
+            th:hx-include="${hxInclude}"
+            th:hx-indicator="${hxIndicator}"
+            th:hx-target-error="${hxTargetError}"
+            autocomplete="off"
+            class="r-datepicker-input"
+            data-datepicker-input>
+            <wa-icon slot="end" name="calendar" class="r-datepicker-icon" style="cursor: pointer;" data-datepicker-icon></wa-icon>
+        </wa-input>
+        
+        <r-datepicker
+            th:name="${name}"
+            th:value="${value}"
+            style="display: none;"
+            class="r-datepicker-logic"
+            data-datepicker-logic>
+        </r-datepicker>
+        
+        <div class="r-shortcuts-hint" style="position: absolute; bottom: -18px; left: 0; font-size: 0.75rem; color: var(--wa-color-neutral-80); opacity: 0; transition: opacity 0.2s ease; pointer-events: none; white-space: nowrap; z-index: 1;" data-datepicker-hint>
+            Shortcuts: ddmm + Enter, ddmmyy + Enter, 't' for today
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="r-datepicker-htmx-extended_v2(name, value, size, hxGet, hxTarget, hxTrigger, hxInclude, hxIndicator, hxTargetError, hxSwap)">
+    <div class="r-datepicker-hybrid" data-datepicker-wrapper>
+        <wa-input
+                th:id="${name}"
+                th:name="${name}"
+                type="text"
+                th:value="${value}"
+                th:size="${size ?: 'small'}"
+                th:hx-get="${hxGet}"
+                th:hx-target="${hxTarget}"
+                th:hx-trigger="${hxTrigger}"
+                th:hx-include="${hxInclude}"
+                th:hx-indicator="${hxIndicator}"
+                th:hx-target-error="${hxTargetError}"
+                th:hx-swap="${hxSwap}"
+                autocomplete="off"
+                class="r-datepicker-input"
+                data-datepicker-input>
+            <wa-icon slot="end" name="calendar" class="r-datepicker-icon" style="cursor: pointer;" data-datepicker-icon></wa-icon>
+        </wa-input>
+
+        <r-datepicker
+                th:name="${name}"
+                th:value="${value}"
+                style="display: none;"
+                class="r-datepicker-logic"
+                data-datepicker-logic>
+        </r-datepicker>
+
+        <div class="r-shortcuts-hint" style="position: absolute; bottom: -18px; left: 0; font-size: 0.75rem; color: var(--wa-color-neutral-80); opacity: 0; transition: opacity 0.2s ease; pointer-events: none; white-space: nowrap; z-index: 1;" data-datepicker-hint>
+            Shortcuts: ddmm + Enter, ddmmyy + Enter, 't' for today
+        </div>
+    </div>
+</th:block>
+
+</html>

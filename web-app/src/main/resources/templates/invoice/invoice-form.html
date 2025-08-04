@@ -3,6 +3,7 @@
       layout:decorate="~{layout/base}">
 <head>
     <th:block th:replace="~{fragments/r-combobox :: r-combobox-dependencies}"></th:block>
+    <th:block th:replace="~{fragments/r-datepicker :: r-datepicker-dependencies}"></th:block>
 </head>
 <body>
 <main layout:fragment="content">
@@ -24,8 +25,13 @@
             <wa-card>
                 <div slot="header" th:text="#{invoice.form.date_section}"></div>
                 <div class="wa-cluster wa-gap-s">
-                    <wa-input id="invoiceDate" name="issueDate" type="date" required size="small"
-                              th:label="#{invoice.form.issue_date}"></wa-input>
+                    <th:block th:replace="~{fragments/r-datepicker :: r-datepicker_label(
+                            id='invoiceDate',
+                            name='issueDate',
+                            label=#{invoice.form.issue_date},
+                            required='true',
+                            size='small')}">
+                    </th:block>
                     <wa-input id="daysUntilDue" value="14" min="0" size="small" required
                               type="number" th:label="#{invoice.form.due_days}"></wa-input>
                     <wa-input name="dueDate" required id="dueDate" class="wa-visually-hidden" tabindex="-1"></wa-input>

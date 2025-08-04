@@ -68,8 +68,8 @@ const initInvoiceForm = async () => {
     const daysInput = document.getElementById('daysUntilDue');
     const customerInput = form.querySelector('wa-input[name="customerId"]');
 
-    const getInvoiceDate = () => invoiceDate.value ? new Date(invoiceDate.value) : new Date();
-    const getDaysUntilDue = () => parseInt(daysInput.value || daysInput.getAttribute('value') || '0', 10) || 0;
+    const getInvoiceDate = () => invoiceDate && getInputValue(invoiceDate) ? new Date(getInputValue(invoiceDate)) : new Date();
+    const getDaysUntilDue = () => parseInt(getInputValue(daysInput) || daysInput.getAttribute('value') || '0', 10) || 0;
 
     const updateDueDate = () => {
         const date = new Date(getInvoiceDate());
@@ -78,7 +78,9 @@ const initInvoiceForm = async () => {
         daysInput.setAttribute('label', `days until due: ${date.toLocaleDateString()}`);
     };
 
-    if (!invoiceDate.value) invoiceDate.value = new Date().toISOString().split('T')[0];
+    if (!invoiceDate || !getInputValue(invoiceDate)) {
+        if (invoiceDate) invoiceDate.value = new Date().toISOString().split('T')[0];
+    }
 
     updateDueDate();
     invoiceDate.addEventListener('change', updateDueDate);

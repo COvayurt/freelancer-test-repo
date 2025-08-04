@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/assets/common/upload.css}">
     <script th:src="@{/assets/common/upload.js}"></script>
     <th:block th:replace="~{fragments/r-combobox :: r-combobox-dependencies}"></th:block>
+    <th:block th:replace="~{fragments/r-datepicker :: r-datepicker-dependencies}"></th:block>
 </head>
 
 <body>
@@ -52,9 +53,14 @@
                 <div class="wa-cluster" style="gap: var(--wa-space-m);">
                     <div>
                         <label for="voucherDate" th:utext="#{voucher_date_label}"><span>*</span></label>
-                        <wa-input id="voucherDate" name="voucherDate" required size="small"
-                                  th:value="${voucherDate}"
-                                  type="date"/>
+                        <th:block th:replace="~{fragments/r-datepicker :: r-datepicker(
+                            id='voucherDate',
+                            name='voucherDate',
+                            required='true',
+                            size='small',
+                            value=${voucherDate},
+                            tabIndex='-1')}">
+                        </th:block>
                     </div>
                     <div style="flex: 1;">
                         <label for="voucherDescription" th:text="#{description}"/>

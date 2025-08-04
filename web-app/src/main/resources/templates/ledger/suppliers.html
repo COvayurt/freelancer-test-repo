@@ -2,7 +2,9 @@
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/base}">
 
-
+<head>
+    <th:block th:replace="~{fragments/r-datepicker :: r-datepicker-dependencies}"></th:block>
+</head>
 <body>
 <main layout:fragment="content" >
     <div >
@@ -15,36 +17,35 @@
                     <div class="wa-cluster" style="padding: var(--wa-space-l)">
 
                         <div>
-                            <label  for="startDate" th:text="#{start_date}" />
-                            <wa-input type="date"
-                                      name="startDate"
-                                      id="startDate"
-                                      size="small"
-                                      th:value="${startDate}"
-                                      th:hx-get="'/htmx/ledger/suppliers'"
-                                      th:hx-target="'#tableContent'"
-                                      th:hx-target-error="'#r-callout'"
-                                      th:hx-swap="'innerHTML'"
-                                      th:hx-indicator="'#loading-indicator'"
-                                      th:hx-trigger="'change'"
-                                      th:hx-include="'[name=\'endDate\'], [name=\'organizationNumber\']'"></wa-input>
+                            <label for="startDate" th:text="#{start_date}"/>
+                            <th:block th:replace="~{fragments/r-datepicker :: r-datepicker-htmx-extended(
+                                name='startDate',
+                                value=${startDate},
+                                size='small',
+                                hxGet='/htmx/ledger/suppliers',
+                                hxTarget='#tableContent',
+                                hxTrigger='change',
+                                hxInclude='[name=\'endDate\'], [name=\'organizationNumber\']',
+                                hxIndicator='#loading-indicator',
+                                hxTargetError='#r-callout')}">
+                            </th:block>
                         </div>
 
-                        <div >
-                            <label  for="endDate" th:text="#{end_date}" />
-                            <wa-input type="date"
-                                      name="endDate"
-                                      id="endDate"
-                                      size="small"
-                                      th:value="${endDate}"
-                                      th:hx-get="'/htmx/ledger/suppliers'"
-                                      th:hx-target="'#tableContent'"
-                                      th:hx-target-error="'#r-callout'"
-                                      th:hx-swap="'innerHTML'"
-                                      th:hx-indicator="'#loading-indicator'"
-                                      th:hx-trigger="'change'"
-                                      th:hx-include="'[name=\'startDate\'], [name=\'organizationNumber\']'"></wa-input>
+                        <div>
+                            <label for="endDate" th:text="#{end_date}"/>
+                            <th:block th:replace="~{fragments/r-datepicker :: r-datepicker-htmx-extended(
+                                name='endDate',
+                                value=${endDate},
+                                size='small',
+                                hxGet='/htmx/ledger/suppliers',
+                                hxTarget='#tableContent',
+                                hxTrigger='change',
+                                hxInclude='[name=\'startDate\'], [name=\'organizationNumber\']',
+                                hxIndicator='#loading-indicator',
+                                hxTargetError='#r-callout')}">
+                            </th:block>
                         </div>
+
 
                         <div >
                             <label for="supplierName" th:text="#{supplier}" />

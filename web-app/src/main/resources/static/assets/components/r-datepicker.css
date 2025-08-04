@@ -1,0 +1,90 @@
+/**
+ * Additional styling for r-datepicker component
+ * Custom themes and context-specific styles
+ */
+
+/* Voucher page styling */
+.voucher-date r-datepicker {
+    --datepicker-border-color: var(--wa-color-brand-60);
+    --datepicker-focus-color: var(--wa-color-brand-50);
+}
+
+/* Invoice page styling */
+.invoice-date r-datepicker {
+    --datepicker-border-color: var(--wa-color-green-60);
+    --datepicker-focus-color: var(--wa-color-green-50);
+}
+
+/* Report filters styling */
+.report-filter r-datepicker {
+    --datepicker-border-color: var(--wa-color-gray-80);
+    --datepicker-focus-color: var(--wa-color-blue-60);
+}
+
+/* Compact table row styling */
+.table-cell-date r-datepicker {
+    width: auto;
+    min-width: 9rem;
+}
+
+/* Form validation styling */
+.r-datepicker-error {
+    --datepicker-border-color: var(--wa-color-red-50);
+    --datepicker-bg-color: var(--wa-color-red-95);
+}
+
+.r-datepicker-success {
+    --datepicker-border-color: var(--wa-color-green-50);
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    r-datepicker {
+        --datepicker-bg-color: var(--wa-color-gray-20);
+        --datepicker-text-color: var(--wa-color-gray-95);
+        --datepicker-border-color: var(--wa-color-gray-40);
+        --datepicker-icon-color: var(--wa-color-gray-70);
+    }
+}
+
+/* Responsive breakpoints */
+@media (max-width: 768px) {
+    r-datepicker .shortcuts-hint {
+        display: none; /* Hide hints on mobile to save space */
+    }
+    
+    .table-cell-date r-datepicker {
+        min-width: 8rem;
+        font-size: var(--wa-font-size-xs);
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    r-datepicker {
+        --datepicker-border-color: #000;
+        --datepicker-focus-color: #0066cc;
+    }
+}
+
+/* Animation utilities */
+.r-datepicker-fade-in {
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom size variants */
+.r-datepicker-xs {
+    font-size: var(--wa-font-size-2xs);
+    width: 7rem;
+}
+
+.r-datepicker-xl {
+    font-size: var(--wa-font-size-l);
+    width: 15rem;
+    padding: var(--wa-space-m);
+}
